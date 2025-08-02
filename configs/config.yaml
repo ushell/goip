@@ -1,0 +1,42 @@
+server:
+  http:
+    host: "0.0.0.0"
+    port: 8080
+    read_timeout: 10s
+    write_timeout: 10s
+    idle_timeout: 120s
+  
+  grpc:
+    host: "0.0.0.0"
+    port: 8081
+    max_connection_idle: 15s
+    max_connection_age: 30s
+    timeout: 10s
+
+logging:
+  level: "info"
+  format: "json"
+  output: "stdout"
+
+ip_database:
+  type: "local"  # local, remote
+  path: "./data/ip2region.xdb"
+  cache_size: 512  # MB
+  auto_reload: true
+  reload_interval: "24h"
+
+cache:
+  enabled: true
+  type: "memory"  # memory, redis
+  ttl: "1h"
+  max_size: 1000  # 最大缓存条目数
+
+metrics:
+  enabled: true
+  path: "/metrics"
+  port: 9090
+
+health_check:
+  enabled: true
+  path: "/health"
+  timeout: "5s"

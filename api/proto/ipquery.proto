@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package ipquery;
+
+option go_package = "./api/proto";
+
+// IP查询服务定义
+service IPQueryService {
+    // 查询单个IP地址信息
+    rpc QueryIP(QueryIPRequest) returns (QueryIPResponse);
+    
+    // 批量查询IP地址信息
+    rpc BatchQueryIP(BatchQueryIPRequest) returns (BatchQueryIPResponse);
+    
+    // 获取服务状态
+    rpc GetServiceStatus(GetServiceStatusRequest) returns (GetServiceStatusResponse);
+}
+
+// 查询IP请求
+message QueryIPRequest {
+    string ip = 1;  // IP地址
+}
+
+// 查询IP响应
+message QueryIPResponse {
+    IPInfo info = 1;    // IP信息
+    int64 timestamp = 2; // 查询时间戳
+}
+
+// 批量查询IP请求
+message BatchQueryIPRequest {
+    repeated string ips = 1;  // IP地址列表
+}
+
+// 批量查询IP响应
+message BatchQueryIPResponse {
+    repeated IPInfo infos = 1;  // IP信息列表
+    int64 timestamp = 2;        // 查询时间戳
+}
+
+// 获取服务状态请求
+message GetServiceStatusRequest {}
+
+// 获取服务状态响应
+message GetServiceStatusResponse {
+    string status = 1;      // 服务状态
+    string version = 2;     // 服务版本
+    int64 uptime = 3;       // 运行时间(秒)
+    int64 query_count = 4;  // 查询次数
+}
+
+// IP信息
+message IPInfo {
+    string ip = 1;              // IP地址
+    string country = 2;         // 国家
+    string country_code = 3;    // 国家代码
+    string region = 4;          // 省份/州
+    string city = 5;            // 城市
+    string district = 6;        // 区县
+    string isp = 7;             // ISP
+    float latitude = 8;         // 纬度
+    float longitude = 9;        // 经度
+    string timezone = 10;       // 时区
+    string postal_code = 11;    // 邮政编码
+    bool is_valid = 12;         // 是否有效IP
+    string error_message = 13;  // 错误信息
+}
