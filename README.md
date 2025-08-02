@@ -36,14 +36,14 @@ goip/
 
 ### 环境要求
 
-- Go 1.21+
+- Go 1.23+
 - Docker (可选)
 
 ### 本地运行
 
 1. 克隆项目
 ```bash
-git clone <repository-url>
+git clone https://github.com/ushell/goip.git
 cd goip
 ```
 
@@ -99,10 +99,10 @@ curl http://localhost:8080/api/v1/ip/8.8.8.8
     "region": "加利福尼亚州",
     "city": "山景城",
     "district": "山景城区",
-    "isp": "Google LLC",
-    "latitude": 37.4192,
-    "longitude": -122.0574,
-    "timezone": "America/Los_Angeles",
+    "isp": "",
+    "latitude": "",
+    "longitude": "",
+    "timezone": "",
     "postal_code": "94043",
     "is_valid": true
   }
@@ -159,7 +159,7 @@ server:
     port: 8080
   grpc:
     host: "0.0.0.0"
-    port: 50051
+    port: 8081
 
 logging:
   level: "info"
@@ -208,9 +208,10 @@ make lint
 make build
 
 # 运行
-./
+./goip
+```
 
-### IP数据源
+## IP数据源
 
 本项目使用 [**ip2region**](https://github.com/lionsoul2014/ip2region) 作为IP地理位置查询的数据源。
 
