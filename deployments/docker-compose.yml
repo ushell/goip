@@ -8,15 +8,15 @@ services:
     container_name: goip-service
     ports:
       - "8080:8080"
-      - "50051:50051"
+      - "8081:8081"
     environment:
       - LOG_LEVEL=info
       - HTTP_HOST=0.0.0.0
       - HTTP_PORT=8080
       - GRPC_HOST=0.0.0.0
-      - GRPC_PORT=50051
+      - GRPC_PORT=8081
     volumes:
-      - ./configs:/root/configs:ro
+      - ./configs:/app/configs:ro
       - ./data:/app/data
     restart: unless-stopped
     healthcheck:
@@ -27,32 +27,32 @@ services:
       start_period: 40s
 
   # 可选：添加Redis作为缓存
-  redis:
-    image: redis:7-alpine
-    container_name: goip-redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    restart: unless-stopped
-    command: redis-server --appendonly yes
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: goip-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+  #   command: redis-server --appendonly yes
 
   # 可选：添加Prometheus监控
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: goip-prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
-    restart: unless-stopped
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   container_name: goip-prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #     - prometheus_data:/prometheus
+  #   restart: unless-stopped
+  #   command:
+  #     - '--config.file=/etc/prometheus/prometheus.yml'
+  #     - '--storage.tsdb.path=/prometheus'
+  #     - '--web.console.libraries=/etc/prometheus/console_libraries'
+  #     - '--web.console.templates=/etc/prometheus/consoles'
 
-volumes:
-  redis_data:
-  prometheus_data:
+# volumes:
+#   redis_data:
+#   prometheus_data:
